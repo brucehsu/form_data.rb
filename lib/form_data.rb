@@ -37,9 +37,9 @@ module FormData
     # @param [#to_h, Hash] data
     # @return [Multipart] if any of values is a {FormData::File}
     # @return [Urlencoded] otherwise
-    def create(data)
+    def create(data, opt={})
       data  = ensure_hash data
-      klass = multipart?(data) ? Multipart : Urlencoded
+      klass = (multipart?(data) or opt.fetch(:multipart, false)) ? Multipart : Urlencoded
 
       klass.new data
     end
